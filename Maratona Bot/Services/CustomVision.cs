@@ -12,10 +12,10 @@ namespace Maratona_Bot.Services
         private readonly IStoreFileProvider storeProvider;
         private readonly IRetrieveFileProvider retrieveProvider;
 
-        public CustomVision(IExtractHttpContent extract, ReadCustonVisionContent readCustonVision, IStoreFileProvider storeProvider, IRetrieveFileProvider retrieveProvider)
+        public CustomVision(IExtractHttpContent extract, IStoreFileProvider storeProvider, IRetrieveFileProvider retrieveProvider)
         {
             this.extractFileHttp = extract;
-            this.readCustonVision = readCustonVision;
+            this.readCustonVision = extract as ReadCustonVisionContent;
             this.storeProvider = storeProvider;
             this.retrieveProvider = retrieveProvider;
         }
@@ -40,7 +40,7 @@ namespace Maratona_Bot.Services
         public async Task StoreImage()
         {
             var image = await extractFileHttp.Data();
-            await storeProvider.StoreFile(image);
+            await storeProvider.StoreFile(new System.Net.Http.ByteArrayContent(image));
         }
 
         public async Task<IEnumerable<byte[]>> RetrieveImages(string albumName)

@@ -9,7 +9,7 @@ namespace Maratona_Bot.Services
     {
         public Task<string> GetPreparedOutput(IEnumerable<Prediction> predictions)
         {
-            throw new System.NotImplementedException();
+            return Task.FromResult("");
         }
     }
 }

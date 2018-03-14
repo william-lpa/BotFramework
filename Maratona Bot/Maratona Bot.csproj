@@ -125,7 +125,9 @@
     <Compile Include="Services\Abstractions\IRetrieveFileProvider.cs" />
     <Compile Include="Services\Abstractions\IStoreFileProvider.cs" />
     <Compile Include="Services\Abstractions\ReadCustonVisionContent.cs" />
+    <Compile Include="Services\AzureRetrieveFileProvider.cs" />
     <Compile Include="Services\CustomVision.cs" />
+    <Compile Include="Services\AzureStoreFileProvider.cs" />
     <Compile Include="Services\ProcessPredictions.cs" />
     <Compile Include="Services\StreamFileContent.cs" />
     <Compile Include="Services\UriFileContent.cs" />

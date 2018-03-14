@@ -23,7 +23,7 @@ namespace Maratona_Bot.Services
             var client = new HttpClient();
             client.DefaultRequestHeaders.Add("Prediction-key", CustomApiKey);
             var response = await client.PostAsync(CustomVisionUri, content).ConfigureAwait(false);
-            var stringResponse = await response.Content.ReadAsStringAsync();
+            stringResponse = await response.Content.ReadAsStringAsync();
         }
 
         public async Task<IEnumerable<Prediction>> RetrievePredicitons()

@@ -35,7 +35,7 @@ C:\Worskpace\Maratona Bot\Maratona Bot\bin\fr\Microsoft.Bot.Builder.resources.dl
 C:\Worskpace\Maratona Bot\Maratona Bot\bin\ja\Microsoft.Bot.Builder.resources.dll
 C:\Worskpace\Maratona Bot\Maratona Bot\bin\ru\Microsoft.Bot.Builder.resources.dll
 C:\Worskpace\Maratona Bot\Maratona Bot\bin\zh-hans\Microsoft.Bot.Builder.resources.dll
-C:\Worskpace\Maratona Bot\Maratona Bot\obj\Debug\Maratona Bot.csprojResolveAssemblyReference.cache
 C:\Worskpace\Maratona Bot\Maratona Bot\obj\Debug\Maratona Bot.csproj.CoreCompileInputs.cache
 C:\Worskpace\Maratona Bot\Maratona Bot\obj\Debug\Bot Application.dll
 C:\Worskpace\Maratona Bot\Maratona Bot\obj\Debug\Bot Application.pdb
+C:\Worskpace\Maratona Bot\Maratona Bot\obj\Debug\Maratona Bot.csprojResolveAssemblyReference.cache
