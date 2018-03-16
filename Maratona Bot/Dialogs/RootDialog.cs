@@ -26,7 +26,12 @@ namespace Maratona_Bot.Dialogs
         {
             var activity = await result as Activity;
 
-            await context.PostAsync($"Vou determinar para qual álbum, esta foto deve ser armazenada, só um momento...");
+            if (activity.Text?.Contains("get") ?? false)
+            {
+                await context.PostAsync($"irei recuperar as imagens! Só um momento por favor...");
+                await RecuperarImagensAlbuns(context);
+            }
+            await context.PostAsync($"Vou determinar para qual álbum esta foto deve ser armazenada, só um momento...");
             await ClassificarImagem(context);
 
         }
@@ -64,6 +69,26 @@ namespace Maratona_Bot.Dialogs
                 await contexto.PostAsync(reply);
             }
             catch (Exception)
+            {
+                await contexto.PostAsync("Ops! Deu algo errado na hora de analisar sua imagem!");
+            }
+
+            contexto.Wait(MessageReceivedAsync);
+        }
+
+        private async Task RecuperarImagensAlbuns(IDialogContext contexto)
+
+        {
+            var activity = contexto.Activity as Activity;
+
+            try
+            {
+                var customVision = new CustomVision(null, StorageProvider, RetrievalProvider);
+                var reply = await customVision.RetrieveImages("teste2");
+                System.IO.File.WriteAllBytes(@"C:\Worskpace\ddd.jpg", reply.Files.First().Data.Data);
+                //a wait contexto.PostAsync(reply);
+            }
+            catch (Exception err)
             {
                 await contexto.PostAsync("Ops! Deu algo errado na hora de analisar sua imagem!");
             }

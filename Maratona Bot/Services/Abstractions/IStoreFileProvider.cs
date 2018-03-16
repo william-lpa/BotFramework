@@ -5,6 +5,6 @@ namespace Maratona_Bot.Services.Abstractions
 {
     public interface IStoreFileProvider
     {
-        Task StoreFile(ByteArrayContent image);
+        Task StoreFile(ByteArrayContent image, string album, string user);
     }
 }

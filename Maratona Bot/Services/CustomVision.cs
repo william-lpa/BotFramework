@@ -1,4 +1,5 @@
-﻿using Maratona_Bot.Services.Abstractions;
+﻿using Maratona_Bot.Model;
+using Maratona_Bot.Services.Abstractions;
 using System.Collections.Generic;
 using System.Net;
 using System.Threading.Tasks;
@@ -40,10 +41,10 @@ namespace Maratona_Bot.Services
         public async Task StoreImage()
         {
             var image = await extractFileHttp.Data();
-            await storeProvider.StoreFile(new System.Net.Http.ByteArrayContent(image));
+            await storeProvider.StoreFile(new System.Net.Http.ByteArrayContent(image), "", "");
         }
 
-        public async Task<IEnumerable<byte[]>> RetrieveImages(string albumName)
+        public async Task<FilesRetrieved> RetrieveImages(string albumName)
         {
             return await retrieveProvider.RetrieveFiles(albumName);
         }
