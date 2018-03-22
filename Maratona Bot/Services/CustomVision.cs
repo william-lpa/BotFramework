@@ -39,12 +39,12 @@ namespace Maratona_Bot.Services
         }
 
         public async Task StoreImage()
-        {
+         {
             var image = await extractFileHttp.Data();
             await storeProvider.StoreFile(new System.Net.Http.ByteArrayContent(image), "", "");
         }
 
-        public async Task<FilesRetrieved> RetrieveImages(string albumName)
+        public async Task<FilesRetrieved> RetrieveImagesAsync(string albumName)
         {
             return await retrieveProvider.RetrieveFiles(albumName);
         }

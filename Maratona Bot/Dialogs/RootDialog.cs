@@ -1,7 +1,9 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
 using System.Threading.Tasks;
+using Maratona_Bot.Model;
 using Maratona_Bot.Services;
 using Maratona_Bot.Services.Abstractions;
 using Microsoft.Bot.Builder.Dialogs;
@@ -42,7 +44,6 @@ namespace Maratona_Bot.Dialogs
 
         public async Task ClassificarImagem(IDialogContext context)
         {
-            //context.Wait((c, a) => ProcessarImagemAsync(c, a));
             await ProcessarImagemAsync(context);
         }
 
@@ -75,8 +76,6 @@ namespace Maratona_Bot.Dialogs
             {
                 await contexto.PostAsync("Ops! Deu algo errado na hora de analisar sua imagem!");
             }
-
-            //            contexto.Wait(MessageReceivedAsync);
         }
 
         private async Task RecuperarImagensAlbuns(IDialogContext contexto)
@@ -86,9 +85,19 @@ namespace Maratona_Bot.Dialogs
             try
             {
                 var customVision = new CustomVision(null, StorageProvider, RetrievalProvider);
-                var reply = await customVision.RetrieveImages(activity.Text ?? "Sem Nome");
-                //herocard Carrosel
-                //a wait contexto.PostAsync(reply);
+                var reply = await customVision.RetrieveImagesAsync(activity.Text ?? "Sem Nome");
+                var filesCount = reply.Files.Count();
+
+                await contexto.PostAsync(filesCount > 0 ? $"Obaaa, encontrei {reply.Files.Count()} fotos no album." : "Infelizmente eu não encontrei nenhuma foto no álbum :(");
+
+                if (filesCount == 0)
+                {
+                    contexto.Wait(MessageReceivedAsync);
+                    return;
+                }
+
+                var message = AttachFiles(activity, reply);
+                await contexto.PostAsync(message);
             }
             catch (Exception err)
             {
@@ -98,5 +107,19 @@ namespace Maratona_Bot.Dialogs
             contexto.Wait(MessageReceivedAsync);
         }
 
+        private Activity AttachFiles(Activity activity, FilesRetrieved reply)
+        {
+            var message = activity.CreateReply();
+
+            var heroCard = new HeroCard("Álbum de fotos", reply.Files.First().AlbumName);
+            message.Attachments.Add(heroCard.ToAttachment());
+            message.AttachmentLayout = AttachmentLayoutTypes.Carousel;
+
+            foreach (var file in reply.Files)
+            {
+                message.Attachments.Add(new Attachment("image/jpeg", $"data:image/jpeg;base64,{Convert.ToBase64String(file.Data.Data)}"));
+            }
+            return message;
+        }
     }
 }
